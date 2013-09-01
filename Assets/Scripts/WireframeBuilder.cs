@@ -20,7 +20,6 @@ public class WireframeBuilder : MonoBehaviour
             newTriangles [2 * i + 5] = sourceTriangles [i + 0];
         }
 
-
         sourceMesh.subMeshCount = 2;
         sourceMesh.SetIndices (newTriangles, MeshTopology.Lines, 1);
     }
