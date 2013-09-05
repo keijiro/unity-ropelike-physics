@@ -11,7 +11,7 @@ public class RopeBuilder : MonoBehaviour
     {
         var rb = node.AddComponent<Rigidbody> ();
         rb.mass = 1.0f;
-        rb.drag = 0.4f;
+        rb.drag = 0.1f;
         rb.angularDrag = 0.1f;
 
         if (isFixed) {
@@ -22,10 +22,9 @@ public class RopeBuilder : MonoBehaviour
             var joint = node.AddComponent<ConfigurableJoint> ();
             joint.connectedBody = boundTo.rigidbody;
 
-            var limit = new SoftJointLimit();
+            var limit = new SoftJointLimit ();
             limit.limit = 0.1f;
-            limit.damper = 10.0f;
-            limit.spring = 100.0f;
+            limit.spring = 40.0f;
             joint.linearLimit = limit;
 
             limit.limit = 10.0f;
@@ -64,19 +63,14 @@ public class RopeBuilder : MonoBehaviour
 
             SetPhysicProperty (node, i == 0 ? firstNode : nodes [i - 1], false);
         }
-
-        // Make the last node.
-        var lastNode = new GameObject ("node");
-        lastNode.transform.localPosition = transform.position + new Vector3 (nodeNum, 0, 0);
-        SetPhysicProperty (lastNode, nodes [nodeNum - 1], true);
     }
 
     IEnumerator Start ()
     {
         while (true) {
             var rb = nodes [Random.Range (0, nodes.Length)].rigidbody;
-            rb.AddForceAtPosition (Random.onUnitSphere * 5.0f, rb.position + Random.onUnitSphere * 1.0f, ForceMode.Impulse);
-            yield return new WaitForSeconds (Random.Range (3.0f, 12.0f));
+            rb.AddForceAtPosition (Random.onUnitSphere * 8.0f, rb.position + Random.onUnitSphere * 1.0f, ForceMode.Impulse);
+            yield return new WaitForSeconds (Random.Range (0.4f, 2.0f));
         }
     }
 }
