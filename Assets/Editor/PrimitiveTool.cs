@@ -43,7 +43,7 @@ public static class PrimitiveTool
 
         mesh.vertices = vertices;
 
-        var indices = new int[4 * 6];
+        var indices = new int[vertices.Length];
         for (var i = 0; i < indices.Length; i++) {
             indices [i] = i;
         }
@@ -64,5 +64,43 @@ public static class PrimitiveTool
 
         AssetDatabase.CreateAsset (mesh, "Assets/Cube.asset");
         AssetDatabase.ImportAsset ("Assets/Cube.asset");
+    }
+
+    [MenuItem("Extra/Create Quad Mesh Asset")]
+    static void CreateQuadMeshAsset ()
+    {
+        var mesh = new Mesh ();
+        mesh.subMeshCount = 2;
+        
+        var vertices = new Vector3 [8];
+        vertices [0] = new Vector3 (-1, +1, 0);
+        vertices [1] = new Vector3 (+1, +1, 0);
+        vertices [2] = new Vector3 (+1, -1, 0);
+        vertices [3] = new Vector3 (-1, -1, 0);
+        vertices [4] = new Vector3 (+1, +1, 0);
+        vertices [5] = new Vector3 (-1, +1, 0);
+        vertices [6] = new Vector3 (-1, -1, 0);
+        vertices [7] = new Vector3 (+1, -1, 0);
+        mesh.vertices = vertices;
+        
+        var indices = new int[vertices.Length];
+        for (var i = 0; i < indices.Length; i++) {
+            indices [i] = i;
+        }
+        mesh.SetIndices (indices, MeshTopology.Quads, 0);
+        
+        indices = new int[5];
+        indices [0] = 0;
+        indices [1] = 1;
+        indices [2] = 2;
+        indices [3] = 3;
+        indices [4] = 0;
+        mesh.SetIndices (indices, MeshTopology.LineStrip, 1);
+        
+        mesh.Optimize ();
+        mesh.RecalculateNormals ();
+        
+        AssetDatabase.CreateAsset (mesh, "Assets/Quad.asset");
+        AssetDatabase.ImportAsset ("Assets/Quad.asset");
     }
 }
