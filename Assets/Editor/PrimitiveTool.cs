@@ -3,8 +3,8 @@ using UnityEditor;
 
 public static class PrimitiveTool
 {
-    [MenuItem("Primitive/Create Cube Mesh Asset")]
-    static void CreateCube ()
+    [MenuItem("Extra/Create Cube Mesh Asset")]
+    static void CreateCubeMeshAsset ()
     {
         var mesh = new Mesh ();
         mesh.subMeshCount = 2;
@@ -51,11 +51,10 @@ public static class PrimitiveTool
 
         indices = new int[4 * 3 * 2];
         var offs = 0;
-        for (var i1 = 0; i1 < 4; i1++) {
-            for (var i2 = 0; i2 < 3; i2++) {
-                var i = i1 * 4 + i2;
-                indices[offs++] = i;
-                indices[offs++] = i + 1;
+        for (var i1 = 0; i1 < 16; i1 += 4) {
+            for (var i2 = i1; i2 < i1 + 3; i2++) {
+                indices [offs++] = i2;
+                indices [offs++] = i2 + 1;
             }
         }
         mesh.SetIndices (indices, MeshTopology.Lines, 1);
