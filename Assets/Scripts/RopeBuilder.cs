@@ -60,6 +60,7 @@ public class RopeBuilder : MonoBehaviour
 
             var child = Instantiate (prefab, node.transform.position, node.transform.rotation) as GameObject;
             child.transform.parent = node.transform;
+            child.GetComponent<CubeScaler>().timeOffset = i;
 
             SetPhysicProperty (node, i == 0 ? firstNode : nodes [i - 1], false);
         }
